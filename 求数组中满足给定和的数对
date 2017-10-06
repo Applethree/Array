@@ -1,0 +1,19 @@
+两个指针i和j分别指向数组的首尾，然后从两端同时向中间遍历。
+
+// 找出满足给定和的数对
+void FixedSum(int* a, int* b, int n, int d)
+{
+    for (int i = 0, j = n - 1; i < n && j >= 0)
+    {
+        if (a[i] + b[j] < d)
+            ++i ;
+        else if (a[i] + b[j] == d)
+        {
+            cout << a[i] << ", " << b[j] << endl ;
+            ++i ;
+            --j ;
+        }
+        else // a[i] + b[j] > d
+            --j ;
+    }
+}
