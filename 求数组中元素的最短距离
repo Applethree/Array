@@ -1,0 +1,30 @@
+先对数组排序，然后遍历一次即可
+
+int compare(const void* a, const void* b)
+{
+    return *(int*)a - *(int*)b ;
+}
+
+// 求数组中元素的最短距离
+void MinimumDistance(int* a, int n)
+{
+    // Sort
+    qsort(a, n, sizeof(int), compare) ;
+
+    int i ; // Index of number 1
+    int j ; // Index of number 2
+
+    int minDistance = numeric_limits<int>::max() ;
+    for (int k = 0; k < n - 1; ++k)
+    {
+        if (a[k + 1] - a[k] < minDistance)
+        {
+            minDistance = a[k + 1] - a[k] ;
+            i = a[k] ;
+            j = a[k + 1] ;
+        }
+    }
+
+    cout << "Minimum distance is: " << minDistance << endl ;
+    cout << "i = " << i << " j = " << j << endl ;
+}
