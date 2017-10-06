@@ -33,3 +33,93 @@ void FindCommonElements(int a[], int b[], int c[], int x, int y, int z)
     cout << "Not found!" << endl ;
 }
 如果三个数组都无序，可以先对a, b进行排序，然后对c中任意一个元素都在b和c中做二分搜索。
+
+
+// 找出三个数组的共同元素
+// O(NlogN)
+int UniqueCommonItem(int *a, int *b, int *c, int n)
+{
+    // sort array a
+    qsort(a, n, sizeof(int), compare) ; // NlogN
+
+    // sort array b
+    qsort(b, n, sizeof(int), compare) ; // NlogN
+
+    // for each element in array c, do a binary search in a and b
+    // This is up to a complexity of N*2*logN
+    for (int i = 0; i < n; i++)
+    {
+        if(BinarySearch(a, n, c[i]) && BinarySearch(b, n, c[i]))
+            return c[i] ;
+    }
+
+    return - 1 ; // not found
+}
+
+
+// 找出三个数组唯一的共同元素
+// O(NlogN)
+int UniqueCommonItem1(int *a, int *b, int *c, int n)
+{
+    // sort array a
+    qsort(a, n, sizeof(int), compare) ; // NlogN
+
+    // Space for time
+    bool *bb = new bool[n] ;
+    memset(bb, 0, n) ;
+
+    bool *bc = new bool[n] ;
+    memset(bb, 0, n) ;
+
+    // for each element in b, do a BS in a and mark all the common element
+    for (int i = 0; i < n; i++) // NlogN
+    {
+        if(BinarySearch(a, n, b[i]))
+            bb[i] = true ;
+    }
+
+    // for each element in c, do a BS only if b[i] is true
+    for (int i = 0; i < n; i++) // NlogN
+    {
+        if(b[i] && BinarySearch(a, n, c[i]))
+            return c[i] ;
+    }
+
+    return - 1 ; // not found
+    
+    
+    排序和二分搜索代码如下
+    // Determine whether a contains value k
+bool BinarySearch(int *a, int n, int k)
+{
+    int left = 0 ;
+    int right = n - 1 ;
+    while (left <= right)
+    {
+        int mid = (left + right) ;
+
+        if(a[mid] < k)
+            left = mid + 1 ;
+        if(a[mid] == k)
+            return true ;
+        else
+            right = mid - 1 ;
+    }
+
+    return false ;
+}
+
+// Compare function for qsort
+int compare(const void* a, const void* b)
+{
+    return *(int*)a - *(int*)b ;
+}
+
+小小总结一下，对于在数组中进行查找的问题，可以分如下两种情况处理
+
+1. 如果给定的数组有序，那么首先应该想到Binary Search，所需O(logn)
+
+2. 如果给定的数组无序，那么首先应该想到对数组进行排序，很多排序算法都能在O(nlogn)时间内对数组进行排序，
+然后再使用二分搜索，总的时间复杂度仍是O(nlogn)。
+
+如果能做到以上两点，大多数关于数组的查找问题，都能迎刃而解。
