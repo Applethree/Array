@@ -1,0 +1,15 @@
+因为对于任意一个数k，有k ^ k = 0，k ^ 0 = k，所以将a中所有元素进行异或，
+那么个数为偶数的元素异或后都变成了0，只留下了个数为奇数的那个元素。
+
+
+int FindElementWithOddCount(int*a, int n)
+{
+     int r = a[0] ;
+
+     for (int i =1; i < n; ++i)
+     {
+          r ^= a[i] ;
+     }
+
+     return r ;
+}
