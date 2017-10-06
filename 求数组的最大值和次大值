@@ -1,0 +1,45 @@
+思想和上一题类似，同样是用分治法，先求出左边的最大值leftmax和次大值leftsecond，
+再求出右边的最大值rightmax和次大值rightsecond，然后合并，如何合并呢？分情况考虑
+1 如果leftmax > rightmax，那么可以肯定leftmax是最大值，但次大值不一定是rightmax，
+但肯定不是rightsecond，只需将leftsecond与rightmax做一次比较即可。
+2 如果rightmax > leftmax，那么可以肯定rightmax是最大值，但次大值不一定是leftmax，
+但肯定不是leftsecond，所以只需将leftmax与rightsecond做一次比较即可。
+
+这种方法无法处理最大元素有多个的情况，比如3,5,7,7将返回7，7而不是7,5。感谢网友 从无到有靠谁人 指出。
+// 找出数组的最大值和次大值，a是待查找的数组，left和right是查找区间，max和second存放结果
+void MaxandMin(int a[], int left, int right, int&max, int&second)
+{
+    if(left == right)
+    {
+        max = a[left] ;
+        second =  INT_MIN;
+    }
+    elseif(left +1== right)
+    {
+        max = a[left] > a[right] ? a[left] : a[right] ;
+        second = a[left] < a[right] ? a[left] : a[right] ;
+    }
+    else
+    {
+        int mid = left + (right - left) /2 ;
+
+        int leftmax ;
+        int leftsecond ;
+        MaxandMin(a, left, mid, leftmax, leftsecond) ;
+
+        int rightmax ;
+        int rightsecond ;
+        MaxandMin(a, mid +1, right, rightmax, rightsecond) ;
+
+        if (leftmax > rightmax)
+        {
+            max = leftmax ;
+            second = leftsecond > rightmax ? leftsecond : rightmax ;
+        }
+        else
+        {
+            max = rightmax ;
+            second = leftmax < rightsecond ? rightsecond : leftmax ;
+        }
+    }
+}
