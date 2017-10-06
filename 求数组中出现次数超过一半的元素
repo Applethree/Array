@@ -1,0 +1,28 @@
+设置一个当前值和当前值的计数器，初始化当前值为数组首元素，计数器值为1，然后从第二个元素开始遍历整个数组，对于每个被遍历到的值a[i]
+1 如果a[i]==currentValue，则计数器值加1
+2 如果a[i] != currentValue， 则计数器值减1，如果计数器值小于0，则更新当前值为a[i]，并将计数器值重置为1
+
+
+// 找出数组中出现次数超过一半的元素
+int Find(int* a, int n)
+{
+    int curValue = a[0] ;
+    int count = 1 ;
+
+    for (int i = 1; i < n; ++i)
+    {
+        if (a[i] == curValue)
+            count++ ;
+        else
+        {
+            count-- ;
+            if (count < 0)
+            {
+                curValue = a[i] ;
+                count = 1 ;
+            }
+        }
+    }
+
+    return curValue ;
+}
