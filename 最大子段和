@@ -1,0 +1,19 @@
+给定一个整型数组a，求出最大连续子段之和，如果和为负数，则按0计算，比如1， 2， -5， 6， 8则输出6 + 8 = 14
+
+// 子数组的最大和
+int Sum(int* a, int n)
+{
+    int curSum = 0;
+    int maxSum = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (curSum + a[i] < 0)
+            curSum = 0;
+        else
+        {
+            curSum += a[i] ;
+            maxSum = max(maxSum, curSum);
+        }
+    }
+    return maxSum;
+}
