@@ -32,3 +32,4 @@ void FindCommonElements(int a[], int b[], int c[], int x, int y, int z)
 
     cout << "Not found!" << endl ;
 }
+如果三个数组都无序，可以先对a, b进行排序，然后对c中任意一个元素都在b和c中做二分搜索。
