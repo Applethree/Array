@@ -1,0 +1,34 @@
+如果三个数组都有序，那么可以设置三个指针指向三个数组的头部，然后根据这三个指针所指的值进行比较来移动指针，直道找到共同元素。
+
+// 三个数组的共同元素-只找最小的
+void FindCommonElements(int a[], int b[], int c[], int x, int y, int z)
+{
+    for(int i = 0, j = 0, k = 0; i < x && j < y && k < z;)
+    {
+        if(a[i] < b[j])
+        {
+            i++ ;
+        }
+        else // a[i] >= b[j]
+        {
+            if(b[j] < c[k])
+            {
+                j++ ;
+            }
+            else // b[j] >= c[k]
+            {
+                if(c[k] < a[i])
+                {
+                    k++ ;
+                }
+                else // c[k] >= a[i]
+                {
+                    cout << c[k] << endl ;
+                    return ;
+                }
+            }
+        }
+    }
+
+    cout << "Not found!" << endl ;
+}
