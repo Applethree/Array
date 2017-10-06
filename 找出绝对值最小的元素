@@ -1,0 +1,57 @@
+由于给定序列是有序的，而这又是搜索问题，所以首先想到二分搜索法，只不过这个二分法比普通的二分法稍微麻烦点，可以分为下面几种情况
+
+如果给定的序列中所有的数都是正数，那么数组的第一个元素即是结果。
+如果给定的序列中所有的数都是负数，那么数组的最后一个元素即是结果。
+如果给定的序列中既有正数又有负数，那么绝对值得最小值一定出现在正数和负数的连接处。
+为什么？因为对于负数序列来说，右侧的数字比左侧的数字绝对值小，如上面的-5, -3, -1, 而对于整整数来说，左边的数字绝对值小，
+比如上面的2, 8，将这个思想用于二分搜索，可先判断中间元素和两侧元素的符号，然后根据符号决定搜索区间，逐步缩小搜索区间，直到只剩下两个元素。
+
+单独设置一个函数用来判断两个整数的符号是否相同。
+bool SameSign(int a, int b)
+{
+    if (a * b > 0)
+        return true;
+    else
+        return false;
+}
+主函数代码。
+// 找出一个非递减序整数序列中绝对值最小的数
+int MinimumAbsoluteValue(int* a, int n)
+{
+    // Only one number in array
+    if (n ==1)
+    {
+        return a[0] ;
+    }
+
+    // All numbers in array have the same sign
+    if (SameSign(a[0], a[n -1]))
+    {
+        return a[0] >=0? a[0] : a[n -1] ;
+    }
+
+    // Binary search
+    int l =0 ;
+    int r = n -1 ;
+
+    while(l < r)
+    {
+        if (l + 1 == r)
+        {
+            return abs(a[l]) < abs(a[r]) ? a[l] : a[r] ;
+        }
+
+        int m = (l + r) /2 ;
+
+        if (SameSign(a[m], a[r]))
+        {
+            r = m;
+            continue;
+        }
+        else
+        {
+            l = m ;
+            continue;
+        }
+    }
+}
