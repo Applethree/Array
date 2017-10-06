@@ -1,0 +1,25 @@
+充分利用数组有序的性质，用两个指针i和j分别指向a和b，比较a[i]和b[j]，根据比较结果移动指针，则有如下三种情况
+1. a[i] < b[j]，则i增加1，继续比较
+2. a[i] == b[j]，则i和j皆加1，继续比较
+3. a[i] < b[j]，则j加1，继续比较
+重复以上过程直到i或j到达数组末尾。
+
+void FindCommon(int* a, int* b, int n)
+{
+    int i = 0;
+    int j = 0 ;
+
+    while (i < n && j < n)
+    {
+        if (a[i] < b[j])
+            ++i ;
+        else if(a[i] == b[j])
+        {
+            cout << a[i] << endl ;
+            ++i ;
+            ++j ;
+        }
+        else// a[i] > b[j]
+            ++j ;
+    }
+}
